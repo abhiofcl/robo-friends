@@ -11,15 +11,22 @@ class App extends React.Component {
       searchField: "",
     };
   }
-  handleSearch(event) {
-    console.log(event.target.value);
-  }
+  handleSearch = (event) => {
+    this.setState({
+      searchField: event.target.value,
+    });
+  };
   render() {
+    const filteredRobot = this.state.robots.filter((robot) => {
+      return robot.name
+        .toLowerCase()
+        .includes(this.state.searchField.toLowerCase());
+    });
     return (
       <div className="tc ">
         <h1>RoboFriends</h1>
         <SearchBox onSearchChange={this.handleSearch} />
-        <CardList robots={this.state.robots} />
+        <CardList robots={filteredRobot} />
       </div>
     );
   }
